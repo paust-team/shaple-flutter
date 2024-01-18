@@ -33,8 +33,8 @@ class Shaple {
   /// Call [Shaple.initialize] to initialize it.
   static Shaple get instance {
     assert(
-    _instance._initialized,
-    'You must initialize the shaple instance before calling Shaple.instance',
+      _instance._initialized,
+      'You must initialize the shaple instance before calling Shaple.instance',
     );
     return _instance;
   }
@@ -75,8 +75,8 @@ class Shaple {
     bool? debug,
   }) async {
     assert(
-    !_instance._initialized,
-    'This instance is already initialized',
+      !_instance._initialized,
+      'This instance is already initialized',
     );
     if (authOptions.pkceAsyncStorage == null) {
       authOptions = authOptions.copyWith(
@@ -87,7 +87,7 @@ class Shaple {
       authOptions = authOptions.copyWith(
         localStorage: MigrationLocalStorage(
           persistSessionKey:
-          "sb-${Uri.parse(url).host.split(".").first}-auth-token",
+              "sb-${Uri.parse(url).host.split(".").first}-auth-token",
         ),
       );
     }
@@ -108,8 +108,8 @@ class Shaple {
     // if still in progress
     _instance._restoreSessionCancellableOperation =
         CancelableOperation.fromFuture(
-          _instance._shapleAuth.recoverSession(),
-        );
+      _instance._shapleAuth.recoverSession(),
+    );
 
     return _instance;
   }
@@ -140,12 +140,12 @@ class Shaple {
   }
 
   void _init(
-      String shapleUrl,
-      String shapleKey, {
-        Client? httpClient,
-        Map<String, String>? customHeaders,
-        required AuthClientOptions authOptions,
-      }) {
+    String shapleUrl,
+    String shapleKey, {
+    Client? httpClient,
+    Map<String, String>? customHeaders,
+    required AuthClientOptions authOptions,
+  }) {
     final headers = {
       ...Constants.defaultHeaders,
       if (customHeaders != null) ...customHeaders
