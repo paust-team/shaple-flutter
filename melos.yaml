@@ -1,0 +1,53 @@
+name: ShapleFlutter
+repository: https://github.com/paust-team/shaple-flutter
+
+packages:
+  - packages/*
+
+command:
+  version:
+    # Generate commit links in package changelogs.
+    linkToCommits: true
+    # Additionally build a changelog at the root of the workspace.
+    workspaceChangelog: true
+    hooks:
+      preCommit: melos run update-version
+
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+    usePubspecOverrides: true
+
+scripts:
+  lint:all:
+    run: melos run analyze && melos run format
+    description: Run all static analysis checks.
+
+  analyze:
+    exec: dart analyze --fatal-warnings --fatal-infos .
+
+  format:
+    exec: dart format lib test -l 80 --set-exit-if-changed
+
+  upgrade:
+    exec: dart pub upgrade
+
+  outdated:
+    exec: dart pub outdated
+
+  update-version:
+    run: |
+      # Loop through the packages directory
+      for d in packages/*/ ; do
+        # Get version number
+        version=$(awk '/version:/ { 
+          pos=match($2, /[0-9]+\.[0-9]+\.[0-9]+/);
+          print substr($2, pos); }' $d/pubspec.yaml)
+        # Update version.dart file
+        echo "const version = '$version';" > $d/lib/src/version.dart
+      done
+      # Stage the version.dart file change
+      git add packages/*/lib/src/version.dart
+    description: Updates the version.dart file for each packages except yet_another_json_isolate
