@@ -6,7 +6,7 @@ class FlutterAuthClientOptions extends AuthClientOptions {
   const FlutterAuthClientOptions({
     super.authFlowType,
     super.autoRefreshToken,
-    super.pkceAsyncStorage,
+    super.asyncStorage,
     this.localStorage,
   });
 
@@ -20,7 +20,7 @@ class FlutterAuthClientOptions extends AuthClientOptions {
       authFlowType: authFlowType ?? this.authFlowType,
       autoRefreshToken: autoRefreshToken ?? this.autoRefreshToken,
       localStorage: localStorage ?? this.localStorage,
-      pkceAsyncStorage: pkceAsyncStorage ?? this.pkceAsyncStorage,
+      pkceAsyncStorage: pkceAsyncStorage ?? this.asyncStorage,
     );
   }
 }

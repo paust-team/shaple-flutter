@@ -63,7 +63,7 @@ class Shaple {
   /// involving deep links.
   ///
   /// PKCE flow uses shared preferences for storing the code verifier by default.
-  /// Pass a custom storage to [pkceAsyncStorage] to override the behavior.
+  /// Pass a custom storage to [asyncStorage] to override the behavior.
   ///
   /// If [debug] is set to `true`, debug logs will be printed in debug console.
   static Future<Shaple> initialize({
@@ -78,7 +78,7 @@ class Shaple {
       !_instance._initialized,
       'This instance is already initialized',
     );
-    if (authOptions.pkceAsyncStorage == null) {
+    if (authOptions.asyncStorage == null) {
       authOptions = authOptions.copyWith(
         pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
       );

@@ -44,6 +44,8 @@ void main() {
       await adminShaple.storage.deleteBucket(bucket.id);
     }
 
+    await adminShaple.from('people').delete();
+
     await shaple.dispose();
     await adminShaple.dispose();
   });
@@ -87,5 +89,22 @@ void main() {
     );
 
     expect(key, equals('test/shaple/README.md'));
+  });
+
+  test('insert data and read it', () async {
+    await signUpAndSignIn();
+
+    await shaple.from('people').insert([
+      {'name': 'Dennis', 'age': 25},
+      {'name': 'John', 'age': 30},
+    ]);
+
+    final data = await shaple.from('people').select();
+    expect(data, hasLength(2));
+
+    await shaple.from('people').delete().eq('id', data[0]['id']);
+
+    final data1 = await shaple.from('people').select();
+    expect(data1, hasLength(1));
   });
 }
