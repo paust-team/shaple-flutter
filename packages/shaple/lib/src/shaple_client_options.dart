@@ -11,3 +11,9 @@ class AuthClientOptions {
     this.authFlowType = AuthFlowType.pkce,
   });
 }
+
+class StorageClientOptions {
+  final int retryAttempts;
+
+  const StorageClientOptions({this.retryAttempts = 0});
+}
