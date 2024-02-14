@@ -14,13 +14,13 @@ class FlutterAuthClientOptions extends AuthClientOptions {
     AuthFlowType? authFlowType,
     bool? autoRefreshToken,
     LocalStorage? localStorage,
-    dynamic pkceAsyncStorage,
+    dynamic asyncStorage,
   }) {
     return FlutterAuthClientOptions(
       authFlowType: authFlowType ?? this.authFlowType,
       autoRefreshToken: autoRefreshToken ?? this.autoRefreshToken,
       localStorage: localStorage ?? this.localStorage,
-      pkceAsyncStorage: pkceAsyncStorage ?? this.asyncStorage,
+      asyncStorage: asyncStorage ?? this.asyncStorage,
     );
   }
 }

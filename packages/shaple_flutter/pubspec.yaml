@@ -24,6 +24,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.2
+  dart_jsonwebtoken: ^2.13.0
 
 platforms:
   android:

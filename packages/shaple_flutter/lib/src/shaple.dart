@@ -3,11 +3,7 @@ import 'dart:async';
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-import 'package:shaple/shaple.dart';
-import 'package:shaple_flutter/src/constants.dart';
-import 'package:shaple_flutter/src/flutter_go_true_client_options.dart';
-import 'package:shaple_flutter/src/local_storage.dart';
-import 'package:shaple_flutter/src/shaple_auth.dart';
+import 'package:shaple_flutter/shaple_flutter.dart';
 
 /// Shaple instance.
 ///
@@ -72,6 +68,8 @@ class Shaple {
     Map<String, String>? headers,
     Client? httpClient,
     FlutterAuthClientOptions authOptions = const FlutterAuthClientOptions(),
+    StorageClientOptions storageOptions = const StorageClientOptions(),
+    PostgrestClientOptions postgrestOptions = const PostgrestClientOptions(),
     bool? debug,
   }) async {
     assert(
@@ -80,14 +78,14 @@ class Shaple {
     );
     if (authOptions.asyncStorage == null) {
       authOptions = authOptions.copyWith(
-        pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
+        asyncStorage: SharedPreferencesGotrueAsyncStorage(),
       );
     }
     if (authOptions.localStorage == null) {
       authOptions = authOptions.copyWith(
         localStorage: MigrationLocalStorage(
           persistSessionKey:
-              "sb-${Uri.parse(url).host.split(".").first}-auth-token",
+              "shaple-${Uri.parse(url).host.split(".").first}-auth-token",
         ),
       );
     }
@@ -97,9 +95,13 @@ class Shaple {
       httpClient: httpClient,
       customHeaders: headers,
       authOptions: authOptions,
+      storageOptions: storageOptions,
+      postgrestOptions: postgrestOptions,
     );
     _instance._debugEnable = debug ?? kDebugMode;
     _instance.log('***** Shaple init completed $_instance');
+
+    assert(_instance._initialized, 'ShapleAuth is not initialized');
 
     _instance._shapleAuth = ShapleAuth();
     await _instance._shapleAuth.initialize(options: authOptions);
@@ -115,6 +117,7 @@ class Shaple {
   }
 
   Shaple._();
+
   static final Shaple _instance = Shaple._();
 
   bool _initialized = false;
@@ -134,7 +137,7 @@ class Shaple {
   /// Dispose the instance to free up resources.
   Future<void> dispose() async {
     await _restoreSessionCancellableOperation.cancel();
-    client.dispose();
+    await client.dispose();
     _instance._shapleAuth.dispose();
     _initialized = false;
   }
@@ -145,6 +148,8 @@ class Shaple {
     Client? httpClient,
     Map<String, String>? customHeaders,
     required AuthClientOptions authOptions,
+    required StorageClientOptions storageOptions,
+    required PostgrestClientOptions postgrestOptions,
   }) {
     final headers = {
       ...Constants.defaultHeaders,
@@ -156,6 +161,8 @@ class Shaple {
       httpClient: httpClient,
       headers: headers,
       authOptions: authOptions,
+      storageOptions: storageOptions,
+      postgrestOptions: postgrestOptions,
     );
     _initialized = true;
   }
@@ -168,4 +175,6 @@ class Shaple {
       }
     }
   }
+
+  bool get initialized => _initialized;
 }
