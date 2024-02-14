@@ -426,7 +426,7 @@ packages:
     source: hosted
     version: "3.1.2"
   yet_another_json_isolate:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: yet_another_json_isolate
       sha256: e727502a2640d65b4b8a8a6cb48af9dd0cbe644ba4b3ee667c7f4afa0c1d6069
