@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:gotrue/gotrue.dart';
 import 'package:http/http.dart';
-import 'package:postgrest/postgrest.dart';
-import 'package:shaple/src/shaple_client_options.dart';
-import 'package:storage_client/storage_client.dart';
+import 'package:shaple/shaple.dart';
 import 'package:yet_another_json_isolate/yet_another_json_isolate.dart';
 
 import 'constants.dart';

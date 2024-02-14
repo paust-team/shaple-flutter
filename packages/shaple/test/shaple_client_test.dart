@@ -5,7 +5,6 @@ import 'package:test/test.dart';
 
 import 'my_config.dart';
 
-
 void main() {
   late ShapleClient shaple;
   late ShapleClient adminShaple;
@@ -84,9 +83,9 @@ void main() {
     final file = File('./README.md');
 
     final key = await shaple.storage.from('test').upload(
-      'shaple/README.md',
-      file,
-    );
+          'shaple/README.md',
+          file,
+        );
 
     expect(key, equals('test/shaple/README.md'));
   });

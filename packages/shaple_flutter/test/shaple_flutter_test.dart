@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shaple_flutter/shaple_flutter.dart';
 
 import 'shaple_flutter_test_stubs.dart';

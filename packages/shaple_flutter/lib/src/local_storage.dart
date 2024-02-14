@@ -88,7 +88,7 @@ class HiveLocalStorage extends LocalStorage {
     }
     await Hive.initFlutter('auth');
     await Hive.openBox(_hiveBoxName, encryptionCipher: encryptionCipher)
-      .timeout(const Duration(seconds: 1));
+        .timeout(const Duration(seconds: 1));
   }
 
   @override

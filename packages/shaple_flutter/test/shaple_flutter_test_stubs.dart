@@ -26,13 +26,13 @@ class _MockWidgetState extends State<MockWidget> {
   Widget build(BuildContext context) {
     return isSignedIn
         ? TextButton(
-      onPressed: () async {
-        try {
-          await Shaple.instance.client.auth.signOut();
-        } catch (_) {}
-      },
-      child: const Text('Sign out'),
-    )
+            onPressed: () async {
+              try {
+                await Shaple.instance.client.auth.signOut();
+              } catch (_) {}
+            },
+            child: const Text('Sign out'),
+          )
         : const Text('You have signed out');
   }
 
