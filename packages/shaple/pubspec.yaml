@@ -1,6 +1,6 @@
 name: shaple
 description: A dart client for Shaple.
-version: 0.1.1
+version: 0.1.2
 homepage: 'https://github.com/paust-team/shaple-flutter'
 repository: 'https://github.com/paust-team/shaple-flutter/tree/main/packages/shaple'
 documentation: 'https://github.com/paust-team/shaple-flutter'
