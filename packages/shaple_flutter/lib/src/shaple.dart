@@ -83,7 +83,7 @@ class Shaple {
     }
     if (authOptions.localStorage == null) {
       authOptions = authOptions.copyWith(
-        localStorage: MigrationLocalStorage(
+        localStorage: SharedPreferencesLocalStorage(
           persistSessionKey:
               "shaple-${Uri.parse(url).host.split(".").first}-auth-token",
         ),
