@@ -109,8 +109,10 @@ class ShapleClient {
   }
 
   get auth => _auth;
-  get storage => _storage..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
-  get postgrest => _postgrest..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
+  get storage =>
+      _storage..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
+  get postgrest =>
+      _postgrest..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
 
   void _listenForAuthEvents() {
     // ignore: invalid_use_of_internal_member
