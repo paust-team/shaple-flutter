@@ -1,3 +1,11 @@
+## 0.1.3
+
+ - **FIX**(shaple_flutter): use setAuth for auto refresh token. ([3225af3b](https://github.com/paust-team/shaple-flutter/commit/3225af3ba9dd9819ba3fa762e36905b959c59628))
+ - **FIX**(shaple): add postgrest export. ([a358a581](https://github.com/paust-team/shaple-flutter/commit/a358a581a46773f21453fae0d878e7f07017e250))
+ - **FIX**(shaple_flutter): rename pkceAsyncStorage to asyncStorage. ([110a49ec](https://github.com/paust-team/shaple-flutter/commit/110a49ecb48ff7cbbabe7c3614c110d2b1bd7d66))
+ - **FEAT**(shaple): add postgrest client of shaple. ([5b380e64](https://github.com/paust-team/shaple-flutter/commit/5b380e64c36ccadbd01759006b1b9900dc1cef96))
+ - **FEAT**(shaple): add support for storage service of shaple. ([9ff31251](https://github.com/paust-team/shaple-flutter/commit/9ff31251c7abd54ff03d2942a39f43e27ad7c914))
+
 ## 0.1.2
 
  - **FIX**(shaple): add postgrest export. ([a358a581](https://github.com/paust-team/shaple-flutter/commit/a358a581a46773f21453fae0d878e7f07017e250))
