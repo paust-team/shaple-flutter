@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -9,9 +7,6 @@ import 'package:shaple_flutter/shaple_flutter.dart';
 
 import './local_storage_stub.dart'
     if (dart.library.html) './local_storage_web.dart' as web;
-
-const _hiveBoxName = 'shaple_authentication';
-const shaplePersistSessionKey = 'SHAPLE_PERSIST_SESSION_KEY';
 
 /// LocalStorage is used to persist the user session in the device.
 ///
