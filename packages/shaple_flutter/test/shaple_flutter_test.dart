@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shaple_flutter/shaple_flutter.dart';
 
+import 'utils.dart';
+
 void main() {
   group("Valid shaple instance", () {
     setUp(() async {
