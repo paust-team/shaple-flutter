@@ -13,10 +13,10 @@ class ShapleClient {
   final String _shapleUrl;
   final YAJsonIsolate _isolate;
 
-  late final GoTrueClient auth;
-  late final SupabaseStorageClient storage;
-  late final PostgrestClient postgrest;
-  late StreamSubscription<AuthState> _authStateSubscription;
+  late final GoTrueClient _auth;
+  late final SupabaseStorageClient _storage;
+  late final PostgrestClient _postgrest;
+  late final StreamSubscription<AuthState> _authStateSubscription;
 
   ShapleClient(
     this._shapleUrl,
@@ -29,15 +29,16 @@ class ShapleClient {
     YAJsonIsolate? isolate,
   })  : _headers = {...DEFAULT_HEADERS, if (headers != null) ...headers},
         _isolate = isolate ?? (YAJsonIsolate()..initialize()) {
-    this.auth = _initAuthClient(
+    httpClient ??= Client();
+    this._auth = _initAuthClient(
       options: authOptions,
       httpClient: httpClient,
     );
-    this.storage = _initStorageClient(
+    this._storage = _initStorageClient(
       options: storageOptions,
       httpClient: httpClient,
     );
-    this.postgrest = _initPostgrestClient(
+    this._postgrest = _initPostgrestClient(
       options: postgrestOptions,
       httpClient: httpClient,
     );
@@ -86,14 +87,12 @@ class ShapleClient {
     required StorageClientOptions options,
     Client? httpClient,
   }) {
-    final storage = SupabaseStorageClient(
+    return SupabaseStorageClient(
       '$_shapleUrl/storage/v1',
       {...headers},
       httpClient: httpClient,
       retryAttempts: options.retryAttempts,
-    )..setAuth(_shapleKey);
-
-    return storage;
+    );
   }
 
   PostgrestClient _initPostgrestClient({
@@ -106,12 +105,16 @@ class ShapleClient {
       schema: options.schema,
       httpClient: httpClient,
       isolate: _isolate,
-    )..setAuth(_shapleKey);
+    );
   }
+
+  get auth => _auth;
+  get storage => _storage..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
+  get postgrest => _postgrest..setAuth(_auth.currentSession?.accessToken ?? _shapleKey);
 
   void _listenForAuthEvents() {
     // ignore: invalid_use_of_internal_member
-    _authStateSubscription = auth.onAuthStateChangeSync.listen(
+    _authStateSubscription = _auth.onAuthStateChangeSync.listen(
       (data) {
         _handleTokenChanged(data.event, data.session?.accessToken);
       },
@@ -123,14 +126,14 @@ class ShapleClient {
     if (event == AuthChangeEvent.initialSession ||
         event == AuthChangeEvent.tokenRefreshed ||
         event == AuthChangeEvent.signedIn) {
-      storage.setAuth(token ?? _shapleKey);
-      postgrest.setAuth(token ?? _shapleKey);
+      _storage.setAuth(token ?? _shapleKey);
+      _postgrest.setAuth(token ?? _shapleKey);
     } else if (event == AuthChangeEvent.signedOut ||
         event == AuthChangeEvent.userDeleted) {
       // Token is removed
 
-      storage.setAuth(_shapleKey);
-      postgrest.setAuth(_shapleKey);
+      _storage.setAuth(_shapleKey);
+      _postgrest.setAuth(_shapleKey);
     }
   }
 }
